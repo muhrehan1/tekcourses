@@ -92,8 +92,19 @@ class CoursesController extends Controller
          $course->save();
         return redirect()->route('courses-view')
                         ->with('success','Course created successfully.' ,$getDynamic);
-       
+          
     }
+
+                public function instructors_view()
+                {
+                    $getDynamic =['title' => 'Instructord | Admin Panel'];
+                    return view('front-end.instructors-add' , $getDynamic);
+
+                }
+
+
+
+
             public function destroyCourse($id)
             {
                 Courses::destroy($id);
@@ -103,10 +114,5 @@ class CoursesController extends Controller
 
             }
 
-            public function instructors_view()
-            {
-                $getDynamic =['title' => 'Instructord | Admin Panel'];
-                return view('front-end.instructors-add' , $getDynamic);
-
-            }
+            
 }

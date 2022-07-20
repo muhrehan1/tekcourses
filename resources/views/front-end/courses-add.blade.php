@@ -40,7 +40,7 @@
                 </div>
                 <!--end::Page title-->
                 <!--begin::Actions-->
-                <div class="d-flex align-items-center gap-2 gap-lg-3">
+                {{-- <div class="d-flex align-items-center gap-2 gap-lg-3">
                     <!--begin::Filter menu-->
                     <div class="m-0">
                         <!--begin::Menu toggle-->
@@ -136,7 +136,7 @@
                     <!--begin::Primary button-->
                     <a href="#" class="btn btn-sm fw-bold btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app">Create</a>
                     <!--end::Primary button-->
-                </div>
+                </div> --}}
                 <!--end::Actions-->
             </div>
             <!--end::Toolbar container-->
@@ -176,8 +176,10 @@
                                     <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" data-kt-initialized="1">
                                         <i class="bi bi-pencil-fill fs-7"></i>
                                         <!--begin::Inputs-->
-                                        <input type="file" name="avatar" accept=".png, .jpg, .jpeg">
+                                        <input type="file" name="course_image" accept=".png, .jpg, .jpeg">
+
                                         <input type="hidden" name="avatar_remove">
+                                       
                                         <!--end::Inputs-->
                                     </label>
                                     <!--end::Label-->
@@ -194,7 +196,11 @@
                                 </div>
                                 <!--end::Image input-->
                                 <!--begin::Description-->
-                                <div class="text-muted fs-7">Set the product thumbnail image. Only *.png, *.jpg and *.jpeg image files are accepted</div>
+                                <div class="text-muted fs-7"> @error('course_image')
+                                   
+                                       <p style="color:red">{{$message}}
+                                    </p>                                     
+                                    @enderror</div>
                                 <!--end::Description-->
                             </div>
                             <!--end::Card body-->
@@ -316,7 +322,11 @@
                                                 <label class="required form-label">{{ $courses_name }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input type="text" name="course_name" class="form-control mb-2" placeholder="{{ $courses_name }}" value="">
+                                                <input type="text" name="course_name" class="form-control mb-2" placeholder="{{ $courses_name }}" value="{{old('course_name')}}">
+                                                @error('course_name')
+                                                <p style="color:red">{{$message}}
+                                                </p> 
+                                                @enderror
                                                 <!--end::Input-->
                                                 <!--begin::Description-->
                                                 <div class="text-muted fs-7">A {{ $courses_name }} is required and recommended to be unique.</div>
@@ -326,97 +336,19 @@
                                             <!--begin::Input group-->
                                             <div class="desc">
                                                 <label class="required form-label">{{ $course_desc }}</label>
-                                                <textarea name="course_desc" id="" cols="140" rows="10"></textarea>
+                                                <textarea name="course_desc" id="" cols="140" rows="10" value="{{old('course_desc')}}"></textarea>
                                             </div>
-                                            {{-- <div>
-                                                <!--begin::Label-->
-                                                <label class="form-label">{{ $course_desc }}</label>
-                                                <!--end::Label-->
-                                                <!--begin::Editor-->
-                                                <div class="ql-toolbar ql-snow"><span class="ql-formats"><span class="ql-header ql-picker">
-                                                    <span class="ql-picker-label" tabindex="0" role="button" aria-expanded="false" aria-controls="ql-picker-options-0">
-                                                        <svg viewBox="0 0 18 18"> 
-                                                            <polygon class="ql-stroke" points="7 11 9 13 11 11 7 11">
-                                                                </polygon> 
-                                                                <polygon class="ql-stroke" points="7 7 9 5 11 7 7 7">
-                                                                    </polygon> 
-                                                                </svg>
-                                                            </span>
-                                                            <span class="ql-picker-options" aria-hidden="true" tabindex="-1" id="ql-picker-options-0">
-                                                                <span tabindex="0" role="button" class="ql-picker-item" data-value="1">
-                                                                    </span>
-                                                                    <span tabindex="0" role="button" class="ql-picker-item" data-value="2">
-                                                                        </span>
-                                                                        <span tabindex="0" role="button" class="ql-picker-item ql-selected">
-                                                                            </span>
-                                                                        </span>
-                                                                    </span>
-                                                                    <select class="ql-header" style="display: none;"><option value="1"></option><option value="2">
-                                                                        </option>
-                                                                        <option selected="selected"></option>
-                                                                    </select>
-                                                                </span>
-                                                                <span class="ql-formats">
-                                                                    <button type="button" class="ql-bold">
-                                                                        <svg viewBox="0 0 18 18">
-                                                                             <path class="ql-stroke" d="M5,4H9.5A2.5,2.5,0,0,1,12,6.5v0A2.5,2.5,0,0,1,9.5,9H5A0,0,0,0,1,5,9V4A0,0,0,0,1,5,4Z">
-                                                                                </path> 
-                                                                                <path class="ql-stroke" d="M5,9h5.5A2.5,2.5,0,0,1,13,11.5v0A2.5,2.5,0,0,1,10.5,14H5a0,0,0,0,1,0,0V9A0,0,0,0,1,5,9Z">
-                                                                                    </path> 
-                                                                                </svg>
-                                                                            </button>
-                                                                            <button type="button" class="ql-italic">
-                                                                                <svg viewBox="0 0 18 18"> <line class="ql-stroke" x1="7" x2="13" y1="4" y2="4"></line> <line class="ql-stroke" x1="5" x2="11" y1="14" y2="14"></line> <line class="ql-stroke" x1="8" x2="10" y1="14" y2="4"></line> </svg></button><button type="button" class="ql-underline"><svg viewBox="0 0 18 18"> <path class="ql-stroke" d="M5,3V9a4.012,4.012,0,0,0,4,4H9a4.012,4.012,0,0,0,4-4V3"></path> <rect class="ql-fill" height="1" rx="0.5" ry="0.5" width="12" x="3" y="15"></rect> </svg></button></span><span class="ql-formats"><button type="button" class="ql-image"><svg viewBox="0 0 18 18"> <rect class="ql-stroke" height="10" width="12" x="3" y="4"></rect> <circle class="ql-fill" cx="6" cy="7" r="1"></circle> <polyline class="ql-even ql-fill" points="5 12 5 11 7 9 8 10 11 7 13 9 13 12 5 12"></polyline> </svg></button><button type="button" class="ql-code-block"><svg viewBox="0 0 18 18"> <polyline class="ql-even ql-stroke" points="5 7 3 9 5 11"></polyline> <polyline class="ql-even ql-stroke" points="13 7 15 9 13 11"></polyline> <line class="ql-stroke" x1="10" x2="8" y1="5" y2="13"></line> </svg></button></span></div><div id="kt_ecommerce_add_product_description" name="kt_ecommerce_add_product_description" class="min-h-200px mb-2 ql-container ql-snow"><div class="ql-editor ql-blank" data-gramm="false" contenteditable="true" ><p><br></p></div><div class="ql-clipboard" contenteditable="true" tabindex="-1"></div><div class="ql-tooltip ql-hidden"><a class="ql-preview" rel="noopener noreferrer" target="_blank" href="about:blank"></a><input type="text" data-formula="e=mc^2" data-link="https://quilljs.com" data-video="Embed URL"><a class="ql-action"></a><a class="ql-remove"></a>
-                                                                        </div>
-                                                                    </div>
-                                                <!--end::Editor-->
-                                                <!--begin::Description-->
-                                                <div class="text-muted fs-7">Set a description to the product for better visibility.</div>
-                                                <!--end::Description-->
-                                            </div> --}}
+                                            @error('course_desc')
+                                            <p style="color:red">{{$message}}
+                                            </p> 
+                                            @enderror
                                             <!--end::Input group-->
                                         </div>
                                         <!--end::Card header-->
                                     </div>
                                     <!--end::General options-->
                                     <!--begin::Media-->
-                                    <div class="card card-flush py-4">
-                                        <!--begin::Card header-->
-                                        <div class="card-header">
-                                            <div class="card-title">
-                                                <h2>{{ $course_media }}</h2>
-                                            </div>
-                                        </div>
-                                        <!--end::Card header-->
-                                        <!--begin::Card body-->
-                                        <div class="card-body pt-0">
-                                            <!--begin::Input group-->
-                                            <div class="fv-row mb-2">
-                                                <!--begin::Dropzone-->
-                                                <div class="dropzone dz-clickable" id="kt_ecommerce_add_product_media">
-                                                    <!--begin::Message-->
-                                                    <div class="dz-message needsclick">
-                                                        <!--begin::Icon-->
-                                                        <i class="bi bi-file-earmark-arrow-up text-primary fs-3x"></i>
-                                                        <!--end::Icon-->
-                                                        <!--begin::Info-->
-                                                        <div class="ms-4">
-                                                            <input type="file" name="course_image">
-                                                            {{-- <h3 class="fs-5 fw-bold text-gray-900 mb-1">Drop files here or click to upload.</h3>
-                                                            <span class="fs-7 fw-semibold text-gray-400">Upload up to 10 files</span> --}}
-                                                        </div>
-                                                        <!--end::Info-->
-                                                    </div>
-                                                </div>
-                                                <!--end::Dropzone-->
-                                            </div>
-                                            <!--end::Input group-->
-                                            <!--begin::Description-->
-                                            <div class="text-muted fs-7">Set the product media gallery.</div>
-                                            <!--end::Description-->
-                                        </div>
-                                        <!--end::Card header-->
-                                    </div>
+                                    
                                     <!--end::Media-->
                                     <!--begin::Pricing-->
                                     <div class="card card-flush py-4">
@@ -425,6 +357,7 @@
                                             <div class="card-title">
                                                 <h2>{{ $course_price }}</h2>
                                             </div>
+                                            
                                         </div>
                                         <!--end::Card header-->
                                         <!--begin::Card body-->
@@ -436,6 +369,12 @@
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input type="text" name="course_price" class="form-control mb-2" placeholder="Course price" value="">
+                                                @error('course_price')
+                                           
+                                                <p style="color:red">{{$message}}
+                                                </p> 
+                                             
+                                            @enderror
                                                
                                             <div class="d-none mb-10 fv-row" id="kt_ecommerce_add_product_discount_fixed">
                                                 <!--begin::Label-->
@@ -458,17 +397,7 @@
                             <!--begin::Tab pane-->
                             <div class="tab-pane fade" id="kt_ecommerce_add_product_advanced" role="tab-panel">
                                 <div class="d-flex flex-column gap-7 gap-lg-10">
-                                    <!--begin::Inventory-->
-                                    
-                                    <!--end::Inventory-->
-                                    <!--begin::Variations-->
-                                    
-                                    <!--end::Variations-->
-                                    <!--begin::Shipping-->
-                                    
-                                    <!--end::Shipping-->
-                                    <!--begin::Meta options-->
-                                    
+                                   
                                 </div>
                             </div>
                             <!--end::Tab pane-->
@@ -482,7 +411,8 @@
                             <!--begin::Button-->
                            
                             <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
-                                <span class="indicator-label">Save Changes</span>
+                                <span class="indicator-label savechnage">Create Couurse</span>
+                                <img src="{{asset('assets/media/loader/loader-add.gif')}}" class="loader-add" alt="" style="display: none;">
                                 <span class="indicator-progress">Please wait... 
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
@@ -501,4 +431,13 @@
     <!--end::Content wrapper-->
  
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+<script>
+    jQuery(document).ready(function () {
+     jQuery('#kt_ecommerce_add_product_submit').click(function (e) { 
+        jQuery('.loader-add').show();
+        
+     });
+    });
+</script>
 @endsection
